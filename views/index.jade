@@ -1,0 +1,156 @@
+extends layout
+
+block content
+    //form#search
+        input#patient(type="text", placeholder="patient")
+        input#query(type="text", placeholder="query")
+
+    script#template-future(type="text/x-_-template")
+        .tl-future
+            .row
+                .col-sm-2
+                    .tl-face
+                        img(src="images/face.jpg")
+
+                    p.tl-patient-name
+                        | <%= patient.name %> さん
+
+                    p.tl-patient-birth
+                        | <%= moment(patient.birthDate).format("YYYY年MM月DD日") %>生まれ
+
+                .col-sm-4
+                    .row
+                        .col-xs-6
+                            .tl-activity__heading
+                                | アクティビティ
+                                br
+                                | (期待値)
+
+                            <% _(3).times(function () { %>
+                            table.tl-activity.tl-activity--expected
+                                <% _(4).times(function () { %>
+                                tr
+                                    <% _(7).times(function () { %>
+                                    td
+                                        .tl-activity__cell
+                                    <% }) %>
+                                <% }) %>
+                            <% }) %>
+
+                        .col-xs-6
+                            .tl-activity__heading
+                                | アクティビティ
+                                br
+                                | (実際値)
+
+                            <% _(3).times(function () { %>
+                            table.tl-activity.tl-activity--actual
+                                <% _(4).times(function () { %>
+                                tr
+                                    <% _(7).times(function () { %>
+                                    td
+                                        .tl-activity__cell(style!="background: <%= _.sample(['#ff0', '#fe0', '#fc0']) %>")
+                                    <% }) %>
+                                <% }) %>
+                            <% }) %>
+
+                .col-sm-6
+
+        .tl-future-events
+            .tl-vertical
+
+            <% _(futureEvents).each(function (futureEvent) { %>
+            .row.tl-future-event
+                .col-sm-2
+                    .tl-date
+                        .tl-date__year
+                            | <%= moment(futureEvent.date).format("YYYY年") %>
+
+                        .tl-date__date
+                            | <%= moment(futureEvent.date).format("MM月DD日") %>
+
+                .col-sm-6.col-sm-push-4
+                    .tl-card
+                        img(src!="images/<%= futureEvent.card %>.png")
+
+                .col-sm-4.col-sm-pull-6
+                    .row
+                        .col-xs-6
+                            .tl-activity__heading
+                                | アクティビティ
+                                br
+                                | (期待値)
+
+                            <% _(3).times(function () { %>
+                            table.tl-activity.tl-activity--expected
+                                <% _(4).times(function () { %>
+                                tr
+                                    <% _(7).times(function () { %>
+                                    td
+                                        .tl-activity__cell
+                                    <% }) %>
+                                <% }) %>
+                            <% }) %>
+
+                        .col-xs-6
+                            .tl-activity__heading
+                                | アクティビティ
+                                br
+                                | (実際値)
+
+                            <% _(3).times(function () { %>
+                            table.tl-activity.tl-activity--actual
+                                <% _(4).times(function () { %>
+                                tr
+                                    <% _(7).times(function () { %>
+                                    td
+                                        .tl-activity__cell(style!="background: <%= _.sample(['#ff0', '#fe0', '#fc0']) %>")
+                                    <% }) %>
+                                <% }) %>
+                            <% }) %>
+
+                    .row
+                        .col-xs-12
+                            ul.tl-activity__list
+                                <% _(futureEvent.todos).each(function (todo) { %>
+                                li <%= todo %>
+                                <% }) %>
+
+            <% }) %>
+
+    script#template-timeline(type="text/x-_-template")
+        .tl-timeline
+            .tl-vertical(style="top: -32px")
+
+            .tl-events
+                <% lifeEvents.forEach(function (lifeEvent) { %>
+                .tl-event(data-dummy-tag!="<%= _.sample(['self', 'people', 'work', 'community']) %>")
+                    .tl-event__start <%= moment(lifeEvent.startDate).format("YYYY年MM月") %>
+                    .tl-event__tag <%= lifeEvent.tags %>
+                    .tl-event__content <%= lifeEvent.content %>
+                <% }) %>
+
+    #future
+
+    #timeline
+
+    #tl-add-lifeevent.tl-add-lifeevent(data-add-lifeevent)
+        | +
+
+    #tl-lifeevent-form.tl-lifeevent-form
+        form
+            .form-group
+                label(for="tl-lifeevent-form__date") 日時
+                input#tl-lifeevent-form__date.form-control(type="date", placeholder="2015-03-07", data-date)
+
+            .form-group
+                label(for="tl-lifeevent-form__content") 出来事
+                textarea#tl-lifeevent-form__content.form-control(data-content, placeholder="例: 相馬野馬追祭りに参加した")
+
+            .form-group
+                label(for="tl-lifeevent-form__tag") タグ
+                input#tl-lifeevent-form__tag.form-control(type="text", placeholder="例: 自分・身近なひと・仕事・コミュニティ", data-tag)
+
+            button.btn.btn-default(type="submit") save
+
+block sidebar

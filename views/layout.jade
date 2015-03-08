@@ -1,0 +1,27 @@
+doctype html
+html
+  head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title 価値観カルテ
+    link(href='http://fonts.googleapis.com/css?family=Roboto', rel='stylesheet' type='text/css')
+    link(rel='stylesheet', href='lib/bootstrap/dist/css/bootstrap.css')
+    link(rel='stylesheet', href='stylesheets/style.css')
+    link(rel='stylesheet', href='lib/vis/dist/vis.css')
+    script(src="lib/moment/moment.js")
+    script(src="lib/async/lib/async.js")
+    script(src="lib/jquery/dist/jquery.min.js")
+    script(src="lib/underscore/underscore-min.js")
+    script(src="lib/backbone/backbone.js")
+    script(src="lib/backbone.stickit/backbone.stickit.js")
+    script(src="lib/vis/dist/vis.js")
+    script(src="javascripts/main.js")
+
+  body
+    .main
+        .main-scroll
+            .main-content
+                block content
+
+    .sidebar
+        block sidebar
